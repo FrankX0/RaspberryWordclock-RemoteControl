@@ -19,7 +19,7 @@ In Order to work with this app you have do add the following changes to the Conf
 11 = OUT 1
 ```
 
-Finally apply the Wordclock.patch included in this Repository to your Wordclock Repository on the Raspberry Pi.  
+Finally apply the Wordclock.diff included in this Repository to your Wordclock Repository on the Raspberry Pi.  
   
 After changing Settings in the App you should now be able to control your Wordclock.  
 For Raspberry Ip Setting you have to insert your local raspberry ip with the WebIOPi port.(192.168.2.1:8000)
