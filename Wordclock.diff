@@ -1,0 +1,97 @@
+diff --git a/wordclock_config/wordclock_config.example.cfg b/wordclock_config/wordclock_config.example.cfg
+index 35b537a..9260948 100644
+--- a/wordclock_config/wordclock_config.example.cfg
++++ b/wordclock_config/wordclock_config.example.cfg
+@@ -4,7 +4,7 @@
+ # Copy this to wordclock_config/wordclock_config.cfg for customization
+ 
+ [wordclock]
+-show_startup_message = True
++show_startup_message = False
+ startup_message = Hi all!
+ 
+ # Additionally available after parsing by the wordclock-software:
+@@ -30,10 +30,15 @@ pin_button_left     = 17
+ pin_button_return   = 22
+ pin_button_right    = 24
+ 
++
+ # Optional value. Uncomment, if temperature sensor is attached. E.g. at pin 4
+ # pin_temp_sensor     = 4
+ 
+-# Number of seconds a button is locked after being pressed (insensitivity to further touch)
++virtual_pin_button_left     = 7
++virtual_pin_button_return   = 8
++virtual_pin_button_right    = 11
++
++# Number of seconds a button is locked after beeing pressed (insensitivity to further touch)
+ lock_time           = 0.2
+ 
+ ### Below here, the wordclocks plugin parameter are provided in alphabetical order
+diff --git a/wordclock_tools/wordclock_interface.py b/wordclock_tools/wordclock_interface.py
+index cc77480..ed148c6 100644
+--- a/wordclock_tools/wordclock_interface.py
++++ b/wordclock_tools/wordclock_interface.py
+@@ -31,6 +31,13 @@ class wordclock_interface:
+         print('  Mapping button "return" to pin ' + str(interface.button_return) + '.')
+         self.button_right  = interface.button_right
+         print('  Mapping button "right" to pin ' + str(interface.button_right) + '.')
++
++        self.virtual_button_left   = interface.virtual_button_left
++        print('  Mapping button "virtual_left" to pin ' + str(interface.virtual_button_left) + '.')
++        self.virtual_button_return = interface.virtual_button_return
++        print('  Mapping button "virtual_return" to pin ' + str(interface.virtual_button_return) + '.')
++        self.virtual_button_right  = interface.virtual_button_right
++        print('  Mapping button "virtual_right" to pin ' + str(interface.virtual_button_right) + '.')
+         self.lock_time = float(config.get('wordclock_interface', 'lock_time'))
+         print('  Lock time of buttons is ' + str(self.lock_time) + ' seconds')
+ 
+@@ -48,7 +55,14 @@ class wordclock_interface:
+         '''
+         while True:
+             for i in pinrange_to_listen:
+-                if not GPIO.input(i):
++                virtual_pin = -1
++                if(i == self.button_left):
++                    virtual_pin = self.virtual_button_left
++                if(i == self.button_right):
++                    virtual_pin = self.virtual_button_right
++                if(i == self.button_return):
++                    virtual_pin = self.virtual_button_return
++                if not GPIO.input(i) or not GPIO.input(virtual_pin):
+                     print('Pin ' + str(i) + ' pressed.')
+                     return i
+             time.sleep(1.0/cps)
+@@ -60,7 +74,14 @@ class wordclock_interface:
+         '''
+         for _ in range(int(seconds*cps)):
+             for i in pinrange_to_listen:
+-                if not GPIO.input(i):
++                virtual_pin = -1
++                if(i == self.button_left):
++                    virtual_pin = self.virtual_button_left
++                if(i == self.button_right):
++                    virtual_pin = self.virtual_button_right
++                if(i == self.button_return):
++                    virtual_pin = self.virtual_button_return
++                if not GPIO.input(i) or not GPIO.input(virtual_pin):
+                     print('Pin ' + str(i) + ' pressed.')
+                     return i
+             time.sleep(1.0/cps)
+@@ -82,9 +103,16 @@ class gpio_low:
+         self.button_return = int(config.get('wordclock_interface', 'pin_button_return'))
+         self.button_right = int(config.get('wordclock_interface', 'pin_button_right'))
+ 
++        self.virtual_button_left = int(config.get('wordclock_interface', 'virtual_pin_button_left'))
++        self.virtual_button_return = int(config.get('wordclock_interface', 'virtual_pin_button_return'))
++        self.virtual_button_right = int(config.get('wordclock_interface', 'virtual_pin_button_right'))
++
+         # Initializations for GPIO-input
+         GPIO.setmode(GPIO.BCM)
+         GPIO.setup(self.button_left, GPIO.IN)
+         GPIO.setup(self.button_return, GPIO.IN)
+         GPIO.setup(self.button_right, GPIO.IN)
++        GPIO.setup(self.virtual_button_left, GPIO.OUT)
++        GPIO.setup(self.virtual_button_return, GPIO.OUT)
++        GPIO.setup(self.virtual_button_right, GPIO.OUT)
+ 
