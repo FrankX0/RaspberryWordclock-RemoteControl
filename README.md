@@ -20,7 +20,20 @@ In Order to work with this app you have do add the following changes to the Conf
 ```
 
 Finally apply the Wordclock.diff included in this Repository to your Wordclock Repository on the Raspberry Pi.  
-  
+
+# iOS
 After changing Settings in the App you should now be able to control your Wordclock.  
 For Raspberry Ip Setting you have to insert your local raspberry ip with the WebIOPi port.(192.168.2.1:8000)
+
+# Web
+Move the content of the Web folder of this repository to your htdocs folder of the WebIOPi installation.  
+```
+rsync -r {PATH_OF_WEB_DIR} {PATH_OF_HTDOCS_DIR}
+```
+ 
+NOTE : This only works if your left your virtual Pins on 7,8,11. Otherwise you have to modify /app/wordclock/index.html.  
+
+After that you should be able to access the page via WebioPi : {IP_OF_RASPBERRY}:8080.  
+For further intructions look at http://webiopi.trouch.com/INSTALL.html (Access WebIOPi over local network)  
+Then click on "Control Wordclock".
 

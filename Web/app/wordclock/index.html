@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height"/>
+	<title>WebIOPi | Demo</title>
+	<script type="text/javascript" src="/webiopi.js"></script>
+	<script type='application/javascript' src='/fastclick.js'></script>
+	<script type="text/javascript">
+		if ('addEventListener' in document) {
+		    document.addEventListener('DOMContentLoaded', function() {
+		        FastClick.attach(document.body);
+		    }, false);
+		}
+	webiopi().ready(function() {
+		webiopi().setFunction(7, "out");
+		webiopi().setFunction(8, "out");
+		webiopi().setFunction(11, "out");
+
+
+		webiopi().digitalWrite(7, 1);
+		webiopi().digitalWrite(8, 1);
+		webiopi().digitalWrite(11, 1);
+		
+
+		var content, button;
+		content = $("#content");
+		
+		var container = $('<div class="container">');
+
+		// create a button that output a single pulse
+		button = webiopi().createPulseButton("left", "Left", 7);
+		container.append(button); // append button to content div
+		
+		// create a button that output a single pulse
+		button = webiopi().createPulseButton("right", "Right", 11);
+		container.append(button); // append button to content div
+
+		// create a button that output a single pulse
+		button = webiopi().createPulseButton("middle", "Middle", 8);
+		container.append(button); // append button to content div		
+
+		content.append(container);
+	});
+		
+	function mousedown() {
+		//webiopi().digitalWrite(25, 1);
+	}
+	
+	function mouseup() {
+		//webiopi().digitalWrite(25, 0);
+	}
+	
+	</script>
+	<style type="text/css">
+		button {
+			flex-grow: 1;			
+			margin:5px;
+			width: 160px;
+			height: 160px;
+			font-size: 16pt;
+			font-weight: bold;
+			background-color: #eee;
+			color: #eee;
+			border-color: transparent;
+			border-radius: 10px;
+			border: none;
+		}
+		
+		input[type="range"] {
+			display: block;
+			width: 160px;
+			height: 45px;
+		}
+				
+		.container {
+			justify-content: center;		
+			width: auto;			
+		  	display: flex;		  	
+		  	flex-direction: row;		  	
+		}​
+
+		.LOW {
+			background-color: White;
+		}
+		
+		.HIGH {
+			background-color: Red;
+		}
+
+		body {
+			background-color: #f0f0f0;	
+		}
+
+		#logo2 { 		    
+		    width: 30px;
+		    height: 30px;		    
+		}
+		#logo2 img {
+   			height: 100%;
+		}
+		
+
+		.header {			
+			flex-direction: row;
+			display: flex;
+    		justify-content: center;
+			width: auto;				
+		}
+	</style>
+</head>
+<body>
+	<div class="header">		
+		<div id="logo2">
+			<img src="raspberry.png"></img>
+		</div>	
+	</div>	
+	<div id="content"></div>
+</body>
+</html>
