@@ -13,14 +13,14 @@
 		    }, false);
 		}
 	webiopi().ready(function() {
-		webiopi().setFunction(7, "out");
-		webiopi().setFunction(8, "out");
-		webiopi().setFunction(11, "out");
+		webiopi().setFunction(7, "OUT");
+		webiopi().setFunction(8, "OUT");
+		webiopi().setFunction(11, "OUT");
 
 
-		webiopi().digitalWrite(7, 1);
-		webiopi().digitalWrite(8, 1);
-		webiopi().digitalWrite(11, 1);
+		webiopi().digitalWrite(7, 0);
+		webiopi().digitalWrite(8, 0);
+		webiopi().digitalWrite(11, 0);
 		
 
 		var content, button;
@@ -29,27 +29,54 @@
 		var container = $('<div class="container">');
 
 		// create a button that output a single pulse
-		button = webiopi().createPulseButton("left", "Left", 7);
-		container.append(button); // append button to content div
+		//button = webiopi().createPulseButton("left", "Left", 7);
+		//container.append(button); // append button to content div
+
+		button = webiopi().createButton("left", "Left", mousedown, mouseup7);
+        content.append(button);
 		
 		// create a button that output a single pulse
-		button = webiopi().createPulseButton("right", "Right", 11);
-		container.append(button); // append button to content div
+		//button = webiopi().createPulseButton("right", "Right", 11);
+		//container.append(button); // append button to content div
+
+		button = webiopi().createButton("right", "right", mousedown, mouseup11);
+        content.append(button);
 
 		// create a button that output a single pulse
-		button = webiopi().createPulseButton("middle", "Middle", 8);
-		container.append(button); // append button to content div		
+		//button = webiopi().createPulseButton("middle", "Middle", 8);
+		//container.append(button); // append button to content div	
+
+
+		button = webiopi().createButton("middle", "Middle", mousedown, mouseup8);
+        content.append(button);	
 
 		content.append(container);
 	});
 		
+
 	function mousedown() {
-		//webiopi().digitalWrite(25, 1);
 	}
-	
-	function mouseup() {
-		//webiopi().digitalWrite(25, 0);
-	}
+
+	function mouseup8() {
+        webiopi().digitalWrite(8, 1);
+        setTimeout(function() {
+                webiopi().digitalWrite(8, 0);
+        }, 200);
+    }
+
+    function mouseup11() {
+        webiopi().digitalWrite(11, 1);
+        setTimeout(function() {
+                webiopi().digitalWrite(11, 0);
+        }, 200);
+    }
+
+    function mouseup7() {
+        webiopi().digitalWrite(7, 1);
+        setTimeout(function() {
+                webiopi().digitalWrite(7, 0);
+        }, 200);
+    }
 	
 	</script>
 	<style type="text/css">
