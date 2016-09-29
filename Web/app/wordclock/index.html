@@ -33,14 +33,14 @@
 		//container.append(button); // append button to content div
 
 		button = webiopi().createButton("left", "Left", mousedown, mouseup7);
-        content.append(button);
+        container.append(button);
 		
 		// create a button that output a single pulse
 		//button = webiopi().createPulseButton("right", "Right", 11);
 		//container.append(button); // append button to content div
 
 		button = webiopi().createButton("right", "right", mousedown, mouseup11);
-        content.append(button);
+        container.append(button);
 
 		// create a button that output a single pulse
 		//button = webiopi().createPulseButton("middle", "Middle", 8);
@@ -48,7 +48,7 @@
 
 
 		button = webiopi().createButton("middle", "Middle", mousedown, mouseup8);
-        content.append(button);	
+        container.append(button);	
 
 		content.append(container);
 	});
