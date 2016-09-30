@@ -27,19 +27,20 @@
 		content = $("#content");
 		
 		var container = $('<div class="container">');
+		var container2 = $('<div class="container">');
 
 		// create a button that output a single pulse
 		//button = webiopi().createPulseButton("left", "Left", 7);
 		//container.append(button); // append button to content div
 
-		button = webiopi().createButton("left", "Left", mousedown, mouseup7);
+		button = webiopi().createButton("left", "Left", mouseup7, mousedown);
         container.append(button);
 		
 		// create a button that output a single pulse
 		//button = webiopi().createPulseButton("right", "Right", 11);
 		//container.append(button); // append button to content div
 
-		button = webiopi().createButton("right", "right", mousedown, mouseup11);
+		button = webiopi().createButton("right", "Right", mouseup11, mousedown);
         container.append(button);
 
 		// create a button that output a single pulse
@@ -47,10 +48,11 @@
 		//container.append(button); // append button to content div	
 
 
-		button = webiopi().createButton("middle", "Middle", mousedown, mouseup8);
-        container.append(button);	
+		button = webiopi().createButton("middle", "Middle", mouseup8, mousedown);
+        container2.append(button);	
 
 		content.append(container);
+		content.append(container2);
 	});
 		
 
