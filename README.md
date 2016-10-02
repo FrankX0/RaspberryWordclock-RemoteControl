@@ -12,11 +12,12 @@ The App works with 3 virtual GPIO Pins that are mapped to your standard GPIO Pin
 You can define this 3 virtual Pins in the App and the Raspberry Software.
 
 In Order to work with this app you have do add the following changes to the Config File of WebIOPi:
+(/etc/webiopi/config)
 ```
 [GPIO]
-7 = OUT 1
-8 = OUT 1
-11 = OUT 1
+7 = OUT 0
+8 = OUT 0
+11 = OUT 0
 ```
 
 Finally apply the Wordclock.diff included in this Repository to your Wordclock Repository on the Raspberry Pi.  
@@ -26,14 +27,15 @@ After changing Settings in the App you should now be able to control your Wordcl
 For Raspberry Ip Setting you have to insert your local raspberry ip with the WebIOPi port.(192.168.2.1:8000)
 
 # Web
-Move the content of the Web folder of this repository to your htdocs folder of the WebIOPi installation.  
+Move the content of the Web folder of this repository to your htdocs folder of the WebIOPi installation. 
+You can set the htdocs folder also in the WebIOPi Config File ! (/etc/webiopi/config)
 ```
 rsync -r {PATH_OF_WEB_DIR} {PATH_OF_HTDOCS_DIR}
 ```
  
 NOTE : This only works if your left your virtual Pins on 7,8,11. Otherwise you have to modify /app/wordclock/index.html.  
 
-After that you should be able to access the page via WebioPi : {IP_OF_RASPBERRY}:8080.  
+After that you should be able to access the page via WebioPi : {IP_OF_RASPBERRY}:8000.  
 For further intructions look at http://webiopi.trouch.com/INSTALL.html (Access WebIOPi over local network)  
 Then click on "Control Wordclock".
 
