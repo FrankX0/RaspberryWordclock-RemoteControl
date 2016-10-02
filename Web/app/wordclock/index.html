@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, height=device-height"/>
-	<title>WebIOPi | Demo</title>
+	<title>Wordclock</title>
 	<script type="text/javascript" src="/webiopi.js"></script>
 	<script type='application/javascript' src='/fastclick.js'></script>
 	<script type="text/javascript">
@@ -29,26 +29,13 @@
 		var container = $('<div class="container">');
 		var container2 = $('<div class="container">');
 
-		// create a button that output a single pulse
-		//button = webiopi().createPulseButton("left", "Left", 7);
-		//container.append(button); // append button to content div
-
-		button = webiopi().createButton("left", "Left", mouseup7, mousedown);
+		button = webiopi().createButton("left", "Left", mousedown(7), mouseup(7));
         container.append(button);
 		
-		// create a button that output a single pulse
-		//button = webiopi().createPulseButton("right", "Right", 11);
-		//container.append(button); // append button to content div
-
-		button = webiopi().createButton("right", "Right", mouseup11, mousedown);
+		button = webiopi().createButton("right", "Right", mousedown(11), mouseup(11));
         container.append(button);
 
-		// create a button that output a single pulse
-		//button = webiopi().createPulseButton("middle", "Middle", 8);
-		//container.append(button); // append button to content div	
-
-
-		button = webiopi().createButton("middle", "Middle", mouseup8, mousedown);
+		button = webiopi().createButton("middle", "Middle", mousedown(8), mouseup(8));
         container2.append(button);	
 
 		content.append(container);
@@ -56,29 +43,17 @@
 	});
 		
 
-	function mousedown() {
+	function mousedown(gpio_pin) {
+		webiopi().digitalWrite(gpio_pin, 1);
 	}
 
-	function mouseup8() {
-        webiopi().digitalWrite(8, 1);
-        setTimeout(function() {
-                webiopi().digitalWrite(8, 0);
+	function mouseup(gpio_pin) {
+		setTimeout(function() {
+                webiopi().digitalWrite(gpio_pin, 0);
         }, 150);
-    }
+	}
 
-    function mouseup11() {
-        webiopi().digitalWrite(11, 1);
-        setTimeout(function() {
-                webiopi().digitalWrite(11, 0);
-        }, 150);
-    }
-
-    function mouseup7() {
-        webiopi().digitalWrite(7, 1);
-        setTimeout(function() {
-                webiopi().digitalWrite(7, 0);
-        }, 150);
-    }
+	
 	
 	</script>
 	<style type="text/css">
@@ -95,13 +70,7 @@
 			border-radius: 10px;
 			border: none;
 		}
-		
-		input[type="range"] {
-			display: block;
-			width: 160px;
-			height: 45px;
-		}
-				
+			
 		.container {
 			justify-content: center;		
 			width: auto;			
@@ -109,13 +78,7 @@
 		  	flex-direction: row;		  	
 		}​
 
-		.LOW {
-			background-color: White;
-		}
-		
-		.HIGH {
-			background-color: Red;
-		}
+		.
 
 		body {
 			background-color: #f0f0f0;	
@@ -141,7 +104,7 @@
 <body>
 	<div class="header">		
 		<div id="logo2">
-			<img src="raspberry.png"></img>
+			<img src="wordclock/raspberry.png"></img>
 		</div>	
 	</div>	
 	<div id="content"></div>
