@@ -29,13 +29,13 @@
 		var container = $('<div class="container">');
 		var container2 = $('<div class="container">');
 
-		button = webiopi().createButton("left", "Left", mousedown(7), mouseup(7));
+		button = webiopi().createButton("left", "Left", mousedown, mouseup);
         container.append(button);
 		
-		button = webiopi().createButton("right", "Right", mousedown(11), mouseup(11));
+		button = webiopi().createButton("right", "Right", mousedown, mouseup);
         container.append(button);
 
-		button = webiopi().createButton("middle", "Middle", mousedown(8), mouseup(8));
+		button = webiopi().createButton("middle", "Middle", mousedown, mouseup);
         container2.append(button);	
 
 		content.append(container);
@@ -43,11 +43,28 @@
 	});
 		
 
-	function mousedown(gpio_pin) {
+	function mousedown(e) {
+		var elementId = (e.target || e.srcElement).id;
+		var gpio_pin = -1;
+		if(elementId === "left")
+			gpio_pin = 7;
+		else if(elementId === "middle")
+			gpio_pin = 8;
+		else if(elementId === "right")
+			gpio_pin = 11;	
 		webiopi().digitalWrite(gpio_pin, 1);
 	}
 
-	function mouseup(gpio_pin) {
+	function mouseup(e) {
+		var elementId = (e.target || e.srcElement).id;
+		var gpio_pin = -1;
+		if(elementId === "left")
+			gpio_pin = 7;
+		else if(elementId === "middle")
+			gpio_pin = 8;
+		else if(elementId === "right")
+			gpio_pin = 11;	
+
 		setTimeout(function() {
                 webiopi().digitalWrite(gpio_pin, 0);
         }, 150);
