@@ -1,97 +1,126 @@
-diff --git a/wordclock_config/wordclock_config.example.cfg b/wordclock_config/wordclock_config.example.cfg
-index 35b537a..9260948 100644
---- a/wordclock_config/wordclock_config.example.cfg
-+++ b/wordclock_config/wordclock_config.example.cfg
-@@ -4,7 +4,7 @@
- # Copy this to wordclock_config/wordclock_config.cfg for customization
+From 8a96f0b378a1fdc25251ba6ab4987690526d1ea3 Mon Sep 17 00:00:00 2001
+From: Bernd <bk1285@users.noreply.github.com>
+Date: Sat, 10 Sep 2016 18:03:01 +0200
+Subject: [PATCH] Another minimal syntax update
+
+---
+ doc/doc_troubleshooting.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/doc/doc_troubleshooting.rst b/doc/doc_troubleshooting.rst
+index 79110af..2691131 100644
+--- a/doc/doc_troubleshooting.rst
++++ b/doc/doc_troubleshooting.rst
+@@ -29,8 +29,8 @@ Something is not working?
  
- [wordclock]
--show_startup_message = True
-+show_startup_message = False
- startup_message = Hi all!
+     * Disable the RPis soundcard (since it might interfere with the PMW-channel, sending data to the LEDs. Thanks to ELViTO12 for reporting)::
  
- # Additionally available after parsing by the wordclock-software:
-@@ -30,10 +30,15 @@ pin_button_left     = 17
- pin_button_return   = 22
- pin_button_right    = 24
+-      sudo sh -c "echo blacklist snd_bcm2835 >> /etc/modprobe.d/alsa-blacklist.conf";
+-      sudo reboot;
++        sudo sh -c "echo blacklist snd_bcm2835 >> /etc/modprobe.d/alsa-blacklist.conf";
++        sudo reboot;
  
-+
- # Optional value. Uncomment, if temperature sensor is attached. E.g. at pin 4
- # pin_temp_sensor     = 4
+ * When starting the wordclock-script, "Pin 17 pressed" is logged all the time?
  
--# Number of seconds a button is locked after being pressed (insensitivity to further touch)
-+virtual_pin_button_left     = 7
-+virtual_pin_button_return   = 8
-+virtual_pin_button_right    = 11
-+
-+# Number of seconds a button is locked after beeing pressed (insensitivity to further touch)
- lock_time           = 0.2
- 
- ### Below here, the wordclocks plugin parameter are provided in alphabetical order
-diff --git a/wordclock_tools/wordclock_interface.py b/wordclock_tools/wordclock_interface.py
-index cc77480..ed148c6 100644
---- a/wordclock_tools/wordclock_interface.py
-+++ b/wordclock_tools/wordclock_interface.py
-@@ -31,6 +31,13 @@ class wordclock_interface:
-         print('  Mapping button "return" to pin ' + str(interface.button_return) + '.')
-         self.button_right  = interface.button_right
-         print('  Mapping button "right" to pin ' + str(interface.button_right) + '.')
-+
-+        self.virtual_button_left   = interface.virtual_button_left
-+        print('  Mapping button "virtual_left" to pin ' + str(interface.virtual_button_left) + '.')
-+        self.virtual_button_return = interface.virtual_button_return
-+        print('  Mapping button "virtual_return" to pin ' + str(interface.virtual_button_return) + '.')
-+        self.virtual_button_right  = interface.virtual_button_right
-+        print('  Mapping button "virtual_right" to pin ' + str(interface.virtual_button_right) + '.')
-         self.lock_time = float(config.get('wordclock_interface', 'lock_time'))
-         print('  Lock time of buttons is ' + str(self.lock_time) + ' seconds')
- 
-@@ -48,7 +55,14 @@ class wordclock_interface:
+-- 
+2.6.2
+
+From f9c1882f51468b279fd5d43c085e6ebfe93aacf1 Mon Sep 17 00:00:00 2001
+From: Pascal Henze <ph@i-novation.de>
+Date: Sun, 2 Oct 2016 12:08:25 +0200
+Subject: [PATCH] last fixes
+
+---
+ wordclock_plugins/merry_xmas/__init__.py          |   0
+ wordclock_plugins/merry_xmas/icons/11x10/logo.png | Bin 150 -> 0 bytes
+ wordclock_plugins/merry_xmas/plugin.py            |  32 ----------------------
+ wordclock_plugins/rainbow/plugin.py               |   2 +-
+ wordclock_tools/wiring.py                         |   2 +-
+ 5 files changed, 2 insertions(+), 34 deletions(-)
+ delete mode 100644 wordclock_plugins/merry_xmas/__init__.py
+ delete mode 100644 wordclock_plugins/merry_xmas/icons/11x10/logo.png
+ delete mode 100644 wordclock_plugins/merry_xmas/plugin.py
+
+diff --git a/wordclock_plugins/merry_xmas/__init__.py b/wordclock_plugins/merry_xmas/__init__.py
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/wordclock_plugins/merry_xmas/icons/11x10/logo.png b/wordclock_plugins/merry_xmas/icons/11x10/logo.png
+deleted file mode 100644
+index bf3097ccb44d77e2f5c5d2b1da117d3af045f23e..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 150
+zcmeAS@N?(olHy`uVBq!ia0vp^+(695!3HFgJ}hYlQn8*cjv*DdYA1U0F(`64OIt4a
+zZhvHr^~cLR3g;Ge+C{mv&J<*re{I>Zs82b+#Zuk}YlZPNy;_!Zly7raWxZ+o&cFlv
+z9cJ9T|EKED@kha$0TPREvU4df^gr2nrtLlJ-^<G;r+=2!1zN=5>FVdQ&MBb@0C&+j
+A#sB~S
+
+diff --git a/wordclock_plugins/merry_xmas/plugin.py b/wordclock_plugins/merry_xmas/plugin.py
+deleted file mode 100644
+index a968e95..0000000
+--- a/wordclock_plugins/merry_xmas/plugin.py
++++ /dev/null
+@@ -1,32 +0,0 @@
+-import datetime
+-import os
+-import wordclock_tools.wordclock_colors as wcc
+-
+-class plugin:
+-    '''
+-    A class displaying the current time on a german WCA as real words...
+-    '''
+-
+-    def __init__(self, config):
+-        '''
+-        Initializations for the startup of the current wordclock plugin
+-        '''
+-        # Get plugin name (according to the folder, it is contained in)
+-        self.name = os.path.dirname(__file__).split('/')[-1]
+-        self.bg_color_index     = 0 # default background color: black
+-        self.word_color_index   = 2 # default word color: warm white
+-
+-    def run(self, wcd, wci):
+-        '''
+-        Displays time in words.
+-        User interaction on pin button_return needs to be implemented on demand.
+-        '''
+-        while True:
+-            # Set background color
+-            wcd.setColorToAll(wcc.colors[self.bg_color_index], includeMinutes=True)
+-            # Set current time
+-            wcd.showText("M E R R Y  X - M A S")
+-            event = wci.waitSecondsForEvent([wci.button_left, wci.button_return, wci.button_right], 5)
+-            if (event == wci.button_return):
+-                return
+-
+diff --git a/wordclock_plugins/rainbow/plugin.py b/wordclock_plugins/rainbow/plugin.py
+index ff21d54..5936136 100644
+--- a/wordclock_plugins/rainbow/plugin.py
++++ b/wordclock_plugins/rainbow/plugin.py
+@@ -29,7 +29,7 @@ class plugin:
+                 for i in range(114):
+                     wcd.setPixelColor(i, self.wheel((i+j) & 255))
+                 wcd.show()
+-                if not GPIO.input(22):
++                if not GPIO.input(22) or GPIO.input(8):
+                     print('Pin ' + str(22) + ' pressed.')
+                     return
+                 time.sleep(20/1000.0)
+diff --git a/wordclock_tools/wiring.py b/wordclock_tools/wiring.py
+index 08759b2..85a1e85 100644
+--- a/wordclock_tools/wiring.py
++++ b/wordclock_tools/wiring.py
+@@ -141,7 +141,7 @@ class christians_wiring:
          '''
-         while True:
-             for i in pinrange_to_listen:
--                if not GPIO.input(i):
-+                virtual_pin = -1
-+                if(i == self.button_left):
-+                    virtual_pin = self.virtual_button_left
-+                if(i == self.button_right):
-+                    virtual_pin = self.virtual_button_right
-+                if(i == self.button_return):
-+                    virtual_pin = self.virtual_button_return
-+                if not GPIO.input(i) or not GPIO.input(virtual_pin):
-                     print('Pin ' + str(i) + ' pressed.')
-                     return i
-             time.sleep(1.0/cps)
-@@ -60,7 +74,14 @@ class wordclock_interface:
+         Access minutes (1,2,3,4)
+         Needs hardware/wiring dependent implementation
+-        This implementation assumes the minutes to be wired as first and last two leds of the led-strip
++        This implementation assumes the minutes to be wired as the last four leds of the led-strip
          '''
-         for _ in range(int(seconds*cps)):
-             for i in pinrange_to_listen:
--                if not GPIO.input(i):
-+                virtual_pin = -1
-+                if(i == self.button_left):
-+                    virtual_pin = self.virtual_button_left
-+                if(i == self.button_right):
-+                    virtual_pin = self.virtual_button_right
-+                if(i == self.button_return):
-+                    virtual_pin = self.virtual_button_return
-+                if not GPIO.input(i) or not GPIO.input(virtual_pin):
-                     print('Pin ' + str(i) + ' pressed.')
-                     return i
-             time.sleep(1.0/cps)
-@@ -82,9 +103,16 @@ class gpio_low:
-         self.button_return = int(config.get('wordclock_interface', 'pin_button_return'))
-         self.button_right = int(config.get('wordclock_interface', 'pin_button_right'))
- 
-+        self.virtual_button_left = int(config.get('wordclock_interface', 'virtual_pin_button_left'))
-+        self.virtual_button_return = int(config.get('wordclock_interface', 'virtual_pin_button_return'))
-+        self.virtual_button_right = int(config.get('wordclock_interface', 'virtual_pin_button_right'))
-+
-         # Initializations for GPIO-input
-         GPIO.setmode(GPIO.BCM)
-         GPIO.setup(self.button_left, GPIO.IN)
-         GPIO.setup(self.button_return, GPIO.IN)
-         GPIO.setup(self.button_right, GPIO.IN)
-+        GPIO.setup(self.virtual_button_left, GPIO.OUT)
-+        GPIO.setup(self.virtual_button_return, GPIO.OUT)
-+        GPIO.setup(self.virtual_button_right, GPIO.OUT)
- 
+         if min == 1:
+             return self.LED_COUNT-4
+-- 
+2.6.2
+
