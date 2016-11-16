@@ -20,7 +20,8 @@ In Order to work with this app you have do add the following changes to the Conf
 11 = OUT 0
 ```
 
-Finally apply the Wordclock.diff included in this Repository to your Wordclock Repository on the Raspberry Pi.  
+Finally apply the changes in my fork:
+https://github.com/euchkatzl/rpi_wordclock (Commit : 0846e15d1ce63b189e55d58257882202ac61cf84)
 
 # iOS
 After changing Settings in the App you should now be able to control your Wordclock.  
